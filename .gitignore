@@ -1,0 +1,4 @@
+.pytest_cahce/
+reqres_test_venv/
+.idea/
+__pycache__/
