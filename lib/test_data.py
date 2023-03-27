@@ -143,35 +143,7 @@ class TestData:
         }
     ]
 
-    list_of_incorrect_card_data = [
-        {
-            'email': 'qwerty@gmail.com',
-            'card_number': '1234123412341234',
-            'card_expiry': '0825',
-            'card_cvc': '111',
-            'card_name': 'QWERTY ASDFG',
-            'country': 'russia',
-            'expected_message': 'Your card number is invalid.'
-        },
-        {
-            'email': 'qwerty@gmail.com',
-            'card_number': '',
-            'card_expiry': '0822',
-            'card_cvc': '',
-            'card_name': '',
-            'country': 'cyprus',
-            'expected_message': 'Your card\'s expiration year is in the past.'
-        },
-        {
-            'email': 'qwerty@gmail.com',
-            'card_number': '123412341234',
-            'card_expiry': '0825',
-            'card_cvc': '111',
-            'card_name': 'QWERTY ASDFG',
-            'country': 'russia',
-            'expected_message': 'Your card number is incomplete.'
-        }
-    ]
+    list_of_conditions_for_wrong_card_data = ['invalid number', 'past expiry', 'incomplete number']
 
     list_powered_text = [*SupportPageLocators.POWERED_BY_BUTTON]
     list_terms_text = [*SupportPageLocators.TERMS_BUTTON]

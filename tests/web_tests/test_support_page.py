@@ -9,6 +9,7 @@
 from pages.support_page import SupportPage
 import pytest
 from lib.test_data import TestData
+from lib.base_case import BaseCase
 
 
 @pytest.fixture()
@@ -43,10 +44,9 @@ class TestSupportPageElements:
 
 
 @pytest.mark.flaky(reruns=3)
-class TestSupportPagePaymentNegative:
-    @pytest.mark.parametrize('test_dict', TestData.list_of_incorrect_card_data,
-                             ids=['invalid number', 'past expiry', 'incomplete number'])
-    def test_support_page_wrong_card_info(self, open_support_page, test_dict):
+class TestSupportPagePaymentNegative(BaseCase):
+    @pytest.mark.parametrize('condition', TestData.list_of_conditions_for_wrong_card_data)
+    def test_support_page_wrong_card_info(self, open_support_page, condition):
         page = open_support_page
 
 # При вводе почты изначально выходло окно верификации, затем перестало,
@@ -57,11 +57,14 @@ class TestSupportPagePaymentNegative:
         # page.email_verification_should_appear()
         # page.close_email_verification()
 
+        test_dict = self.prepare_invalid_card_data(condition)
         # Fill payment data
         page.send_payment_data(test_dict['email'], test_dict['card_number'], test_dict['card_expiry'],
                                test_dict['card_cvc'], test_dict['card_name'])
         page.choose_country(test_dict['country'])
+        page.scroll_down(400)
         page.press_pay()
+        page.scroll_down(-400)
         # Compare messages about wrong card info
         page.check_wrong_card_info_message(test_dict['expected_message'])
         page.go_back_to_main_page()
